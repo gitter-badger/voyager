@@ -107,8 +107,8 @@ module.exports = function(engine){
               stats = JSON.parse( JSON.stringify(stats) ); //fix mongoose bugs.
               stats[ result.eventKey ] = stats[ result.eventKey ] || [];
               //already contains ..
-              if(!_.findWhere(stats[ result.eventKey ], result.track.timestamp)){
-                stats[ result.eventKey ].push(result.track);
+              if(!_.findWhere(stats[ result.eventKey ], { timestamp: result.track.timestamp } )){
+                stats[ result.eventKey ].push(result.track); //
               }
               record.stats = stats;
               record.save(function(err, r){
