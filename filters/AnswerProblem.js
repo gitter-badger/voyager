@@ -19,9 +19,7 @@ module.exports = function(engine){
         var problems = _.flatten(_.map(lesson.activities, function(activitiy){
           return activitiy.problems;
         }));
-        var problem = _.find(problems, function(problem){
-          return a.ProblemId;
-        });
+        var problem = _.find(problems, { _id: a.ProblemId });
         if(problem){
           switch(problem.type){
             case 'singlechoice':
