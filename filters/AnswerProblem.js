@@ -19,21 +19,21 @@ module.exports = function(engine){
         var problems = _.flatten(_.map(lesson.activities, function(activitiy){
           return activitiy.problems;
         }));
-        var problem = _.find(problems, { _id: a.ProblemId });
+        var problem = _.findWhere(problems, { _id: a.ProblemId });
         if(problem){
           switch(problem.type){
             case 'singlechoice':
-              a.Answer = _.findWhere(problem.choices, function(choice){
-                return choice.body == a.Answer;
-              })._id;
-              break;
-            case 'multichoice'://多选题数据有问题 ？
-              var choice = _.findWhere(problem.choices, function(choice){
-                return choice.body == a.Answer;
-              });
+              var choice = _.findWhere(problem.choices, { body: a.Answer });
               if(choice){
-                a.Answer = [ choice._id ] ;
+                a.Answer = [ choice._id ];
               }
+              break;
+            case 'multichoice':
+              a.Answer = _.map(_.compact(_.map(a.Answer, function(choice){
+                return _.findWhere(problem.choices, { body: choice });
+              })), function(choice){
+                return choice._id;
+              });
               break;
             case 'singlefilling':
               //nothing.
@@ -43,7 +43,7 @@ module.exports = function(engine){
         }else{
           callback('AnswerProblem: can not found problem.');
         }
-        // console.log(a.Answer);
+        //console.log(a.Answer);
       });
     }else{
       callback(null);
