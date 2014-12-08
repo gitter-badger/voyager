@@ -13,6 +13,7 @@ module.exports = function(engine){
       });
       var roomTaskGroup = [];
       _.each(groupByRoomId, function(students, roomId){
+		engine.cache.del('room:' + roomId, function(){});
         roomTaskGroup.push(function(callback){
           (function(roomId, students){
             var studentTaskGroup = [];
