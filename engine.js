@@ -48,6 +48,7 @@ Engine.prototype.init = function(callback){
   var engine = this;
   engine.cache = redis.createClient();
   mongoose.connect(engine.config('db'), function(err, db){
+	  if(err) throw err;
     require('./model');
     callback(engine);
   });

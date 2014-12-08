@@ -103,7 +103,8 @@ app.get('/stats/rooms', function(req, res){
 });
 
 
-client.connect('mongodb://localhost/teacher-dashboard', function(err, db){
+client.connect('mongodb://root:xiaoshu815@10.160.68.76/enterprise', function(err, db){
+  if(err) throw err;
   app.set('db', db);
   app.listen(3002);
 });

@@ -8,8 +8,9 @@ module.exports = function(engine){
         password: 'xiaoshu815'
       },
       production: {
-        api:  'http://yangcong345.com',
-        db:   'mongodb://localhost/teacher-dashboard',
+				"per-request-length" : 10000,
+        api:  'http://10.122.84.12:9002',
+        db:   'mongodb://root:xiaoshu815@10.160.68.76/enterprise',
         username: 'admin1',
         password: 'xiaoshu815'
       },

@@ -33,14 +33,9 @@ module.exports = function(engine){
      */
     var filterByStudent = function(tracks){
       return _.filter(tracks, function(track){
-        var properties = engine.filterAttribute(track.data.properties, [
-          'roles',
-          'usergroup'
-        ]);
-
-        if(properties){
-          return properties.roles 		== 'student' ||
-                properties.usergroup 	== 'student';
+        if(track.data.properties){
+          return track.data.properties.roles 		  == 'student' ||
+                 track.data.properties.usergroup 	== 'student';
         }
       });
     };
@@ -144,6 +139,7 @@ module.exports = function(engine){
         (function(url, current){
           requestQueue.push(function(callback){
             engine.request(url, function(err, tracks){
+			        console.log('tracks length: %s', tracks.length);
               processTracks(tracks, function(err, results){
                 engine.cache.set('last', current, function(err, reply){
                   callback(err, results);
